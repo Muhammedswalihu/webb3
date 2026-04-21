@@ -3,33 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PilotForge — Validate, prove, and win pilots</title>
-  <meta name="description" content="PilotForge helps technology and deep-tech founders validate an idea, shape a pilot offer, and prepare the planning documents needed to speak to partners and investors." />
+  <title>PilotForge — Assessor-view idea review</title>
+  <meta name="description" content="PilotForge provides a short assessor-view idea review built around real rejection patterns and 28 review areas. Start on the first page, then move to the second page to submit your idea and complete payment." />
 
-  <!-- Fonts (Castari-like: serif headlines + orbitron-ish brand + inter body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Calendly embed -->
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
-
   <style>
     :root{
-      --bg:#15171e;
-      --bg2:#0f1117;
+      --bg:#22151b;
+      --bg2:#2d1b23;
       --ink:#ffffff;
-      --muted:#b4b4b4;
-      --muted2:#9ca3af;
-      --line:#3f404b;
-      --line2:#2f3038;
-      --lineHover:#575f72;
-      --surface:#15171e;
-      --panel:#3a4655;
-      --cta:#e8e8e0;
-      --ctaHover:#ffffff;
-      --shadow: 0 24px 90px rgba(0,0,0,.55);
-      --max: 1200px;
+      --muted:#f7dce4;
+      --muted2:#f2c7d4;
+      --line:#8d5e6c;
+      --line2:#704754;
+      --lineHover:#c97f95;
+      --surface:#2b1a21;
+      --panel:#ffa5be;
+      --cta:#ffa5be;
+      --ctaHover:#ffbdd0;
+      --soft:#fff0f5;
+      --max:1120px;
     }
 
     *{box-sizing:border-box}
@@ -37,15 +33,15 @@
 
     body{
       margin:0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       font-weight:300;
-      -webkit-font-smoothing: antialiased;
+      -webkit-font-smoothing:antialiased;
       overflow-x:hidden;
     }
 
-    a{color:inherit; text-decoration:none}
+    a{color:inherit;text-decoration:none}
 
     .wrap{
       width:100%;
@@ -54,37 +50,42 @@
       padding:0 24px;
     }
 
-    /* Fixed vertical guide lines (Castari-like) */
     .guides{
       position:fixed;
       inset:0;
       pointer-events:none;
       z-index:10;
     }
-    .guides .l, .guides .r{
+    .guides .l,.guides .r{
       position:absolute;
-      top:0; bottom:0;
+      top:0;
+      bottom:0;
       width:1px;
-      background: var(--line2);
+      background:var(--line2);
     }
-    .guides .l{ left:24px; }
-    .guides .r{ right:24px; }
+    .guides .l{left:24px}
+    .guides .r{right:24px}
+
     @media (min-width:501px){
-      .guides .l{ left:40px; }
-      .guides .r{ right:40px; }
+      .guides .l{left:40px}
+      .guides .r{right:40px}
     }
     @media (min-width:1201px){
-      .guides .l{ left:100px; }
-      .guides .r{ right:100px; }
-      .wrap{ padding:0 100px; }
-    }
-    @media (min-width:1536px){
-      .guides .l{ left:200px; }
-      .guides .r{ right:200px; }
-      .wrap{ padding:0 200px; }
+      .guides .l{left:100px}
+      .guides .r{right:100px}
+      .wrap{padding:0 100px}
     }
 
-    /* Subtle starfield / dots */
+    .app{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+      background:
+        radial-gradient(circle at top, rgba(255,165,190,.12), transparent 38%),
+        linear-gradient(180deg, #24161d 0%, #1f1318 100%);
+    }
+
     .bgfx{
       position:absolute;
       inset:0;
@@ -97,39 +98,23 @@
       position:absolute;
       inset:-20% -20%;
       background:
-        radial-gradient(2px 2px at 10% 15%, rgba(255,255,255,.35), transparent 60%),
-        radial-gradient(2px 2px at 28% 44%, rgba(255,255,255,.20), transparent 60%),
-        radial-gradient(2px 2px at 72% 18%, rgba(255,255,255,.22), transparent 60%),
-        radial-gradient(2px 2px at 84% 52%, rgba(255,255,255,.18), transparent 60%),
-        radial-gradient(2px 2px at 42% 78%, rgba(255,255,255,.16), transparent 60%);
-      opacity:.35;
-      filter: blur(.2px);
+        radial-gradient(2px 2px at 10% 15%, rgba(255,255,255,.25), transparent 60%),
+        radial-gradient(2px 2px at 28% 44%, rgba(255,255,255,.18), transparent 60%),
+        radial-gradient(2px 2px at 72% 18%, rgba(255,255,255,.18), transparent 60%),
+        radial-gradient(2px 2px at 84% 52%, rgba(255,255,255,.12), transparent 60%),
+        radial-gradient(2px 2px at 42% 78%, rgba(255,255,255,.12), transparent 60%);
+      opacity:.5;
+      filter:blur(.2px);
     }
 
-    .shooting{
-      position:absolute;
-      width:120px;
-      height:24px;
-      opacity:.85;
-      transform: scale(var(--scale, .75));
-      animation: shoot var(--dur, 1.7s) linear infinite;
-    }
-    .shooting svg{width:120px;height:24px}
-    @keyframes shoot{
-      0%{ transform: translateX(-140px) translateY(0) scale(var(--scale, .75)); opacity:0; }
-      10%{ opacity:.85; }
-      100%{ transform: translateX(calc(100vw + 140px)) translateY(0) scale(var(--scale, .75)); opacity:0; }
-    }
-
-    /* Header */
     header{
       position:relative;
-      z-index:50;
+      z-index:40;
       height:80px;
       display:flex;
       align-items:center;
     }
-    @media (min-width:768px){ header{ height:100px; } }
+    @media (min-width:768px){header{height:96px}}
 
     .head-inner{
       display:flex;
@@ -149,7 +134,7 @@
       width:28px;
       height:28px;
       border:1px solid var(--line);
-      background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(89,89,89,.30) 10px, rgba(89,89,89,.30) 11px);
+      background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,165,190,.22) 10px,rgba(255,165,190,.22) 11px);
       display:grid;
       place-items:center;
     }
@@ -157,506 +142,312 @@
       display:block;
       width:10px;
       height:10px;
-      border:1px solid rgba(255,255,255,.6);
-      transform: rotate(45deg);
-      opacity:.8;
+      border:1px solid rgba(255,255,255,.8);
+      transform:rotate(45deg);
+      opacity:.9;
     }
 
     .brand-name{
-      font-family: Orbitron, Inter, system-ui, sans-serif;
+      font-family:Orbitron,Inter,system-ui,sans-serif;
       font-weight:500;
       letter-spacing:.02em;
       font-size:20px;
     }
-    @media (min-width:768px){ .brand-name{ font-size:24px; } }
+    @media (min-width:768px){.brand-name{font-size:24px}}
 
     .nav{
       display:none;
-      gap:26px;
+      gap:24px;
       font-size:14px;
       position:absolute;
       left:50%;
-      transform: translateX(-50%);
+      transform:translateX(-50%);
       font-weight:300;
     }
-    @media (min-width:801px){ .nav{ display:flex; } }
+    @media (min-width:801px){.nav{display:flex}}
+    .nav a{color:#ffe6ee;opacity:.92;transition:opacity .15s ease}
+    .nav a:hover{opacity:1}
 
-    .nav a{ color:#e5e7eb; opacity:.9; transition:opacity .15s ease; }
-    .nav a:hover{ opacity:1; }
-
-    .actions{ display:flex; align-items:center; gap:10px; }
+    .actions{display:flex;align-items:center;gap:10px}
 
     .btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap:10px;
-      padding:10px 14px;
+      padding:11px 15px;
       border:1px solid var(--line);
-      background: transparent;
-      color: var(--ink);
+      background:transparent;
+      color:var(--ink);
       cursor:pointer;
-      transition: border-color .15s ease, background .15s ease, transform .05s ease;
+      transition:border-color .15s ease,background .15s ease,transform .05s ease;
       font-size:13px;
       font-weight:500;
       user-select:none;
     }
-    .btn:hover{ border-color: var(--lineHover); }
-    .btn:active{ transform: translateY(1px); }
+    .btn:hover{border-color:var(--lineHover)}
+    .btn:active{transform:translateY(1px)}
 
     .btn-cta{
-      background: var(--cta);
-      color:#000;
-      border-color: transparent;
+      background:var(--cta);
+      color:#2b111a;
+      border-color:transparent;
     }
-    .btn-cta:hover{ background: var(--ctaHover); }
-
-    /* Layout */
-    .app{
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      position:relative;
-    }
+    .btn-cta:hover{background:var(--ctaHover)}
 
     main{
       position:relative;
       z-index:20;
       width:100%;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      margin-top: 36px;
-      margin-bottom: 120px;
+      margin-top:24px;
+      margin-bottom:100px;
     }
-    @media (min-width:1201px){ main{ margin-top: 18px; } }
 
-    /* Headline */
+    .page{display:block}
+    .page[hidden]{display:none}
+
     .hero{
       text-align:center;
       width:100%;
     }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border:1px solid var(--line);
+      padding:10px 14px;
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:#ffe6ee;
+      margin-bottom:20px;
+      background:rgba(255,255,255,.03);
+    }
+
     .h1{
-      font-family: "DM Serif Display", Georgia, serif;
-      font-size: 36px;
+      font-family:"DM Serif Display",Georgia,serif;
+      font-size:36px;
       line-height:1.05;
       letter-spacing:.01em;
-      margin: 0 auto 14px;
-      max-width: 980px;
+      margin:0 auto 14px;
+      max-width:920px;
     }
-    @media (min-width:601px){ .h1{ font-size:40px; } }
-    @media (min-width:1201px){ .h1{ font-size:56px; } }
+    @media (min-width:601px){.h1{font-size:42px}}
+    @media (min-width:1201px){.h1{font-size:58px}}
 
-    .h1 .muted{ color: rgba(156,156,156,1); }
+    .h1 .muted{color:#ffd7e3}
 
     .lead{
-      max-width: 680px;
-      margin: 0 auto 18px;
-      font-size: 14px;
+      max-width:740px;
+      margin:0 auto 18px;
+      font-size:14px;
       line-height:1.75;
-      color: var(--muted);
-      padding: 0 12px;
+      color:var(--muted);
+      padding:0 12px;
     }
-    @media (min-width:801px){ .lead{ font-size:18px; } }
+    @media (min-width:801px){.lead{font-size:18px}}
 
     .pill{
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap:10px;
-      background:#fff;
-      color:#000;
-      padding: 10px 14px;
+      background:var(--soft);
+      color:#34111c;
+      padding:10px 14px;
       font-size:12px;
       font-weight:500;
-      margin-top: 6px;
+      margin-top:6px;
+      flex-wrap:wrap;
     }
     .pill .tag{
       font-size:10px;
       letter-spacing:.20em;
       text-transform:uppercase;
-      background:#000;
+      background:#34111c;
       color:#fff;
       padding:4px 8px;
       font-weight:600;
       white-space:nowrap;
     }
 
-    /* Grid hero panel */
     .panel{
-      width: calc(100vw - 96px);
-      margin-top: 22px;
-      border:1px solid var(--lineHover);
-      background: var(--panel);
+      width:calc(100vw - 96px);
+      margin-top:22px;
+      border:1px solid rgba(255,255,255,.25);
+      background:linear-gradient(135deg, rgba(255,165,190,.95), rgba(255,210,223,.88));
+      color:#2d0f18;
       overflow:hidden;
       display:flex;
       align-items:center;
       justify-content:center;
       position:relative;
-      height: 240px;
+      min-height:220px;
     }
-    @media (min-width:501px){ .panel{ width: calc(100vw - 160px); } }
-    @media (min-width:1201px){
-      .panel{ width: calc(100vw - 400px); height:auto; aspect-ratio:16/5; }
-    }
-    @media (min-width:1536px){ .panel{ width: calc(100vw - 800px); } }
+    @media (min-width:501px){.panel{width:calc(100vw - 160px)}}
+    @media (min-width:1201px){.panel{width:calc(100vw - 400px);aspect-ratio:16/5;min-height:auto}}
 
     .gridbg{
       position:absolute;
       inset:0;
       pointer-events:none;
       background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(255,255,255,.10) 11px, rgba(255,255,255,.10) 12px, transparent 12px, transparent 24px),
-        repeating-linear-gradient(90deg, transparent, transparent 11px, rgba(255,255,255,.10) 11px, rgba(255,255,255,.10) 12px, transparent 12px, transparent 24px);
+        repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(45,15,24,.10) 11px, rgba(45,15,24,.10) 12px, transparent 12px, transparent 24px),
+        repeating-linear-gradient(90deg, transparent, transparent 11px, rgba(45,15,24,.10) 11px, rgba(45,15,24,.10) 12px, transparent 12px, transparent 24px);
       background-size:24px 24px;
-      opacity:.38;
+      opacity:.5;
     }
 
-    .panel .inner{
-      position:relative;
-      z-index:2;
-      text-align:center;
-      padding: 0 18px;
-    }
-
-    .panel .title{
-      font-family: "DM Serif Display", Georgia, serif;
-      font-size: 24px;
-      margin:0 0 12px;
-    }
-    @media (min-width:1201px){ .panel .title{ font-size: 30px; } }
+    .panel .inner{position:relative;z-index:2;text-align:center;padding:24px 18px}
+    .panel .title{font-family:"DM Serif Display",Georgia,serif;font-size:24px;margin:0 0 12px}
+    @media (min-width:1201px){.panel .title{font-size:30px}}
 
     code.kbd{
       display:inline-block;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.20);
-      color:#fff;
-      padding: 10px 14px;
-      font-size: 13px;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      background:rgba(45,15,24,.08);
+      border:1px solid rgba(45,15,24,.18);
+      color:#2b111a;
+      padding:10px 14px;
+      font-size:13px;
     }
-    @media (min-width:1201px){ code.kbd{ font-size: 15px; } }
 
-    /* Section separators */
-    .sep{ width:100%; margin:64px 0; }
-    @media (min-width:1201px){ .sep{ margin:100px 0; } }
-    .sep .line{ height:1px; background: rgba(255,255,255,.08); }
+    .sep{width:100%;margin:48px 0}
+    @media (min-width:1201px){.sep{margin:72px 0}}
+    .sep .line{height:1px;background:rgba(255,255,255,.09)}
 
-    /* Stripe header block */
     .stripe{
       width:100%;
       border:1px solid var(--line);
-      height:88px;
+      height:80px;
       display:flex;
       align-items:center;
       justify-content:center;
-      background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(89,89,89,.30) 10px, rgba(89,89,89,.30) 11px);
+      background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,165,190,.18) 10px,rgba(255,165,190,.18) 11px);
       overflow:hidden;
       margin-bottom:0;
     }
-    .stripe h2{
-      font-family: "DM Serif Display", Georgia, serif;
-      font-size: 28px;
-      margin:0;
-    }
-    @media (min-width:1201px){ .stripe h2{ font-size:40px; } }
+    .stripe h2{font-family:"DM Serif Display",Georgia,serif;font-size:28px;margin:0}
 
-    /* Content blocks */
-    .block{
-      width:100%;
+    .kpi,
+    .timeline,
+    .faq,
+    .formWrap,
+    .noticeBlock,
+    .homeNote{
+      background:rgba(43,26,33,.88);
       border-left:1px solid var(--line);
       border-right:1px solid var(--line);
       border-bottom:1px solid var(--line);
-      background: var(--surface);
+      backdrop-filter: blur(6px);
     }
 
-    .grid2{
-      display:grid;
-      grid-template-columns: 1fr;
-    }
-    @media (min-width:1024px){
-      .grid2{ grid-template-columns: 1fr 1fr; }
-    }
+    .kpi{display:flex;gap:0;flex-direction:column}
+    @media (min-width:768px){.kpi{flex-direction:row}}
+    .kpi .k{flex:1;border:1px solid var(--line);padding:24px 26px;min-height:130px}
+    .kpi .k + .k{margin-top:-1px}
+    @media (min-width:768px){.kpi .k + .k{margin-top:0;margin-left:-1px}}
+    .kpi .k b{display:block;font-weight:600;font-size:28px;margin-bottom:8px;color:#fff}
+    .kpi .k span{display:block;color:var(--muted);font-size:13px;line-height:1.6}
 
-    .card{
-      border-right: none;
-      border-bottom:1px solid var(--line);
-      padding: 28px;
-    }
-    @media (min-width:1024px){
-      .card{ border-bottom:none; }
-      .card.left{ border-right:1px solid var(--line); }
-    }
+    .homeNote{padding:28px}
+    .homeNote h3{font-family:"DM Serif Display",Georgia,serif;margin:0 0 10px;font-size:28px}
+    .homeNote p{margin:0;color:var(--muted);line-height:1.8}
 
-    .card h3{
-      font-family: "DM Serif Display", Georgia, serif;
-      margin:0 0 10px;
-      font-size: 24px;
-    }
-    .card p{ margin:0; color: var(--muted); line-height:1.8; }
-
-    .kpi{
-      background: var(--bg);
-      display:flex;
-      gap:0;
-      flex-direction:column;
-    }
-    @media (min-width:768px){ .kpi{ flex-direction:row; } }
-
-    .kpi .k{
-      flex:1;
-      border:1px solid var(--line);
-      padding: 24px 26px;
-      min-height: 140px;
-    }
-    .kpi .k + .k{ margin-top:-1px; }
-    @media (min-width:768px){
-      .kpi .k + .k{ margin-top:0; margin-left:-1px; }
-    }
-    .kpi .k b{ display:block; font-weight:600; font-size:28px; margin-bottom:8px; }
-    .kpi .k span{ display:block; color: var(--muted); font-size:13px; }
-
-    /* Offers */
-    .offers{
-      background: var(--bg);
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:0;
-      border-left:1px solid var(--line);
-      border-right:1px solid var(--line);
-      border-bottom:1px solid var(--line);
-    }
-    @media (min-width:1024px){
-      .offers{ grid-template-columns: repeat(3, 1fr); }
-    }
-
-    .offer{
-      background: transparent;
-      border-top:1px solid var(--line);
-      border-right:none;
-      padding: 28px;
-      position:relative;
-      overflow:hidden;
-      transition: border-color .15s ease;
-    }
-    @media (min-width:1024px){
-      .offer{ border-right:1px solid var(--line); }
-      .offer:last-child{ border-right:none; }
-    }
-
-    .offer:hover{ border-color: var(--lineHover); }
-
-    .step{
-      font-size:12px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:#fff;
-      font-weight:500;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-bottom:12px;
-    }
-    .step .n{
-      display:inline-grid;
-      place-items:center;
-      width:22px; height:22px;
-      border:1px solid rgba(255,255,255,.30);
-      color: rgba(255,255,255,.90);
-      font-size:12px;
-    }
-
-    .offer h3{
-      font-family: "DM Serif Display", Georgia, serif;
-      margin:0 0 12px;
-      font-size: 24px;
-    }
-    .offer p{ margin:0 0 12px; color: var(--muted); line-height:1.8; }
-    .offer ul{ margin:0; padding-left: 18px; color: var(--muted); line-height:1.8; }
-    .offer li{ margin: 6px 0; }
-
-    .offer .ctaRow{ margin-top: 18px; }
-    .offer .ctaRow .btn{ width:100%; }
-
-    /* Timeline */
-    .timeline{
-      background: var(--bg);
-      border-left:1px solid var(--line);
-      border-right:1px solid var(--line);
-      border-bottom:1px solid var(--line);
-      display:grid;
-      grid-template-columns: 1fr;
-    }
-    .trow{
-      display:grid;
-      grid-template-columns: 1fr;
-      border-top:1px solid var(--line);
-    }
+    .timeline{display:grid;grid-template-columns:1fr}
+    .trow{display:grid;grid-template-columns:1fr;border-top:1px solid var(--line)}
     @media (min-width:801px){
-      .trow{ grid-template-columns: 1fr 1fr; }
-      .trow > div:first-child{ border-right:1px solid var(--line); }
+      .trow{grid-template-columns:1fr 1fr}
+      .trow > div:first-child{border-right:1px solid var(--line)}
     }
-    .tcell{ padding: 28px; }
-    .tcell h3{ font-family:"DM Serif Display", Georgia, serif; margin:0 0 10px; font-size:24px; }
-    .tcell p{ margin:0; color: var(--muted); line-height:1.8; }
+    .tcell{padding:26px}
+    .tcell h3{font-family:"DM Serif Display",Georgia,serif;margin:0 0 10px;font-size:24px}
+    .tcell p{margin:0;color:var(--muted);line-height:1.8}
 
-    /* FAQ */
-    .faq{
-      background: var(--bg);
-      border-left:1px solid var(--line);
-      border-right:1px solid var(--line);
-      border-bottom:1px solid var(--line);
+    .formWrap{padding:28px}
+    .formWrap h3,.noteTitle{font-family:"DM Serif Display",Georgia,serif;margin:0 0 10px;font-size:28px}
+    .formWrap p{margin:0;color:var(--muted);line-height:1.8}
+
+    .paymentBox{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      padding:18px;
+      margin-top:18px;
+      margin-bottom:18px;
     }
-    .q{
-      width:100%;
-      border-top:1px solid var(--line);
-      background: transparent;
-      color: var(--ink);
-      padding: 0;
+    .paymentBox h4{margin:0 0 8px;font-size:15px;font-weight:600;color:#fff}
+    .paymentBox p{margin:0;color:var(--muted);line-height:1.8}
+
+    .noticeBlock{padding:24px 28px}
+    .notice{
+      border:1px dashed #ffc3d4;
+      background:rgba(255,165,190,.10);
+      padding:16px;
     }
-    .q button{
+    .notice p{margin:0;color:#ffe6ee;line-height:1.7}
+
+    .payRow{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;margin-bottom:18px}
+
+    .faq .q{width:100%;border-top:1px solid var(--line);background:transparent;color:var(--ink);padding:0}
+    .faq .q button{
       width:100%;
-      height: 88px;
+      min-height:84px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:14px;
-      padding: 0 28px;
-      background: transparent;
-      border: 0;
+      padding:20px 28px;
+      background:transparent;
+      border:0;
       cursor:pointer;
-      color: inherit;
+      color:inherit;
     }
-    .q h3{
-      font-family:"DM Serif Display", Georgia, serif;
-      font-size: 20px;
-      margin:0;
-      padding-right: 18px;
-      text-align:left;
-    }
-    @media (min-width:1024px){
-      .q h3{ font-size: 28px; }
-    }
+    .faq .q h3{font-family:"DM Serif Display",Georgia,serif;font-size:20px;margin:0;padding-right:18px;text-align:left}
+    .x{width:32px;height:32px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.22);opacity:.9;transition:transform .2s ease;flex:0 0 auto}
+    .x svg{width:18px;height:18px}
+    .a{max-height:0;opacity:0;overflow:hidden;transition:max-height .28s ease,opacity .28s ease}
+    .a p{margin:0;padding:0 28px 22px;color:var(--muted);line-height:1.8;font-size:16px}
+    .q[data-open="true"] .a{max-height:280px;opacity:1}
+    .q[data-open="true"] .x{transform:rotate(45deg)}
 
-    .x{
-      width:32px; height:32px;
-      display:grid;
-      place-items:center;
-      border:1px solid rgba(255,255,255,.22);
-      opacity:.9;
-      transition: transform .2s ease;
-    }
-    .x svg{ width:18px; height:18px; }
-
-    .a{
-      max-height:0;
-      opacity:0;
-      overflow:hidden;
-      transition: max-height .28s ease, opacity .28s ease;
-    }
-    .a p{ margin:0; padding: 0 28px 22px; color: var(--muted); line-height:1.8; font-size:16px; }
-
-    .q[data-open="true"] .a{ max-height: 260px; opacity:1; }
-    .q[data-open="true"] .x{ transform: rotate(45deg); }
-
-    /* Footer */
     footer{
       margin-top:auto;
-      border-top:1px solid rgba(255,255,255,.55);
-      background: var(--bg);
+      border-top:1px solid rgba(255,255,255,.22);
+      background:transparent;
       position:relative;
       z-index:20;
-      padding: 60px 0 0;
-      height: 520px;
+      padding:48px 0 0;
+      min-height:320px;
       overflow:hidden;
     }
-
-    .footTop{
-      display:flex;
-      flex-direction:column;
-      gap:26px;
-    }
-    @media (min-width:1201px){
-      .footTop{ flex-direction:row; justify-content:space-between; gap:60px; }
-    }
-
-    .footCol h2{
-      font-family:"DM Serif Display", Georgia, serif;
-      margin:0;
-      font-size: 28px;
-    }
-    @media (min-width:768px){ .footCol h2{ font-size: 34px; } }
-
-    .footCol p{ margin:0; color: var(--muted); line-height:1.8; max-width: 520px; }
-
-    .footLinks{
-      display:flex;
-      gap:48px;
-    }
-    .footLinks h3{ margin:0 0 12px; font-size:14px; font-weight:500; }
-    .footLinks a{ display:block; color: var(--muted); margin: 10px 0; font-size:14px; }
-    .footLinks a:hover{ color:#fff; }
-
+    .footTop{display:flex;flex-direction:column;gap:26px}
+    @media (min-width:1201px){.footTop{flex-direction:row;justify-content:space-between;gap:60px}}
+    .footCol h2{font-family:"DM Serif Display",Georgia,serif;margin:0;font-size:28px}
+    .footCol p{margin:0;color:var(--muted);line-height:1.8;max-width:560px}
+    .footLinks{display:flex;gap:48px;flex-wrap:wrap}
+    .footLinks h3{margin:0 0 12px;font-size:14px;font-weight:500}
+    .footLinks a{display:block;color:var(--muted);margin:10px 0;font-size:14px}
+    .footLinks a:hover{color:#fff}
     .watermark{
       position:absolute;
-      left:0;
-      right:0;
-      bottom: -10px;
+      left:0;right:0;bottom:-10px;
       opacity:.06;
       pointer-events:none;
       user-select:none;
       text-align:center;
-      font-family: Orbitron, Inter, system-ui, sans-serif;
+      font-family:Orbitron,Inter,system-ui,sans-serif;
       font-weight:300;
-      font-size: 20vw;
+      font-size:20vw;
       line-height:.8;
+      color:#fff;
     }
 
-    /* "Next page" booking flow */
-    .page{ display:block; width:100%; }
-    .page[hidden]{ display:none; }
+    iframe{width:100%;border:0;display:block;background:transparent}
 
-    .bookWrap{ width:100%; margin-top: 26px; }
-    /* Calendly: keep the embed visually consistent with the dark theme */
-    .calendly-inline-widget,
-    .calendly-inline-widget iframe{
-      background: transparent !important;
-    }
-
-    .form{
-      width:100%;
-      border-left:1px solid var(--line);
-      border-right:1px solid var(--line);
-      border-bottom:1px solid var(--line);
-      border-top:0;
-      background: var(--surface);
-      padding: 28px;
-    }
-
-    /* ---- Dark-theme hardening (prevents “white band” sections) ---- */
-    html, body { background: var(--bg) !important; }
-    .app, main, .page { background: var(--bg) !important; }
-    section, .wrap { background: transparent; }
-
-    .kpi, .offers, .timeline, .faq, .block, .form, .cal { background: var(--bg) !important; }
-    .kpi .k, .card { background: transparent !important; }
-
-    [style*="background: white"],
-    [style*="background:#fff"],
-    [style*="background: #fff"],
-    [style*="background-color: white"],
-    [style*="background-color:#fff"],
-    [style*="background-color: #fff"] { background: var(--bg) !important; }
-
-    @media (prefers-reduced-motion: reduce){
-      .shooting{ animation:none; }
-      .btn{ transition:none; }
-      .a{ transition:none; }
-      .x{ transition:none; }
-    }
+    @media (prefers-reduced-motion: reduce){.btn,.a,.x{transition:none}}
   </style>
 </head>
-
 <body>
   <div class="guides" aria-hidden="true">
     <div class="l"></div>
@@ -664,36 +455,7 @@
   </div>
 
   <div class="app">
-    <div class="bgfx" aria-hidden="true">
-      <div class="shooting" style="left:6%; top:22%; --scale:.70; --dur:1.85s;">
-        <svg viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="10" width="4" height="4" fill="#FFFFFF"/>
-          <rect x="5" y="10" width="4" height="4" fill="#D1D5DB"/>
-          <rect x="10" y="10" width="4" height="4" fill="#8499A1"/>
-          <rect x="15" y="10" width="4" height="4" fill="#4D6370"/>
-          <rect x="20" y="10" width="4" height="4" fill="#4D6370"/>
-          <rect x="25" y="10" width="4" height="4" fill="#4D6370" opacity=".9"/>
-          <rect x="30" y="10" width="4" height="4" fill="#4D6370" opacity=".8"/>
-          <rect x="40" y="10" width="4" height="4" fill="#4D6370" opacity=".6"/>
-          <rect x="55" y="10" width="4" height="4" fill="#4D6370" opacity=".3"/>
-          <rect x="65" y="8" width="4" height="4" fill="#4D6370" opacity=".2"/>
-        </svg>
-      </div>
-
-      <div class="shooting" style="left:18%; top:58%; --scale:.55; --dur:2.25s; animation-delay:.5s;">
-        <svg viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="10" width="4" height="4" fill="#FFFFFF"/>
-          <rect x="5" y="10" width="4" height="4" fill="#D1D5DB"/>
-          <rect x="10" y="10" width="4" height="4" fill="#8499A1"/>
-          <rect x="15" y="10" width="4" height="4" fill="#4D6370"/>
-          <rect x="20" y="10" width="4" height="4" fill="#4D6370"/>
-          <rect x="25" y="10" width="4" height="4" fill="#4D6370" opacity=".9"/>
-          <rect x="30" y="10" width="4" height="4" fill="#4D6370" opacity=".8"/>
-          <rect x="40" y="10" width="4" height="4" fill="#4D6370" opacity=".6"/>
-          <rect x="55" y="10" width="4" height="4" fill="#4D6370" opacity=".3"/>
-        </svg>
-      </div>
-    </div>
+    <div class="bgfx" aria-hidden="true"></div>
 
     <header class="wrap">
       <div class="head-inner">
@@ -703,323 +465,240 @@
         </a>
 
         <nav class="nav" aria-label="Navigation">
-          <a href="#offers" data-home-nav>Offers</a>
-          <a href="#timeline" data-home-nav>Timeline</a>
+          <a href="#how" data-home-nav>How it works</a>
           <a href="#faq" data-home-nav>FAQs</a>
+          <a href="#payment" data-form-nav>Payment</a>
         </nav>
 
         <div class="actions">
-          <button class="btn btn-cta" type="button" data-book-open>Book a call</button>
+          <button class="btn btn-cta" type="button" data-open-form>Start review</button>
         </div>
       </div>
     </header>
 
-    <!-- HOME PAGE -->
-    <main class="page" id="homePage">
-      <div class="wrap hero" id="top">
-        <h1 class="h1">
-          <span class="muted">Validate</span> <span class="muted">your</span> <span class="muted">idea</span> <span class="muted">on</span><br>
-          <span class="muted">Innovation</span> <span class="muted">·</span> <span class="muted">Viability</span> <span class="muted">·</span> <span class="muted">Scalability</span>
-        </h1>
+    <main>
+      <section class="page" id="homePage">
+        <div class="wrap hero" id="top">
+          <div class="eyebrow">Assessor-view review system</div>
 
-        <p class="lead">
-          PilotForge helps technology and deep-tech founders validate an idea, shape a pilot offer, and prepare the planning documents needed to speak to partners and investors.
-          Start with an initial call, then share your idea details under the calendar so we can prepare and make the review genuinely useful.
-        </p>
+          <h1 class="h1">
+            <span class="muted">See</span> <span class="muted">how</span> <span class="muted">your</span> <span class="muted">idea</span><br>
+            <span class="muted">looks</span> <span class="muted">from</span> <span class="muted">an</span> <span class="muted">assessor</span> <span class="muted">view</span>
+          </h1>
 
-        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; padding: 0 12px;">
-          <button class="btn btn-cta" type="button" data-book-open>Book a call</button>
-          <a class="btn" href="#offers">See the 3 offers</a>
-        </div>
-
-        <div style="display:flex; justify-content:center; padding: 0 12px;">
-          <div class="pill" style="margin-top:18px;">
-            <span class="tag">Focus</span>
-            <span>Technology and deep-tech startups (AI, software, and hardware)</span>
-          </div>
-        </div>
-
-        <div class="panel" aria-label="How booking works">
-          <div class="gridbg" aria-hidden="true"></div>
-          <div class="inner">
-            <p class="title">Two steps. One clear outcome.</p>
-            <code class="kbd">Book a time, submit your idea details, and get your proof plan</code>
-          </div>
-        </div>
-
-        <div class="sep"><div class="line"></div></div>
-
-        <div class="kpi" aria-label="What you get">
-          <div class="k">
-            <b>Review</b>
-            <span>Innovation, viability, and scalability review</span>
-          </div>
-          <div class="k">
-            <b>Clarity</b>
-            <span>Proof gaps and next steps checklist</span>
-          </div>
-          <div class="k">
-            <b>Pilots</b>
-            <span>Pilot offer, outreach, and research support</span>
-          </div>
-        </div>
-
-        <div class="sep"><div class="line"></div></div>
-
-        <!-- OFFERS -->
-        <div class="stripe" id="offers"><h2>Offers</h2></div>
-        <div class="offers" role="region" aria-label="PilotForge offers">
-          <div class="offer">
-            <div class="step"><span class="n">1</span>Model 1</div>
-            <h3>Initial call (idea review)</h3>
-            <p>Start here. Book a slot, then fill the idea details form under the calendar.</p>
-            <ul>
-              <li>Innovation, viability, scalability review</li>
-              <li>Proof gaps and risk checklist</li>
-              <li>Clear next actions and target customer direction</li>
-            </ul>
-            <div class="ctaRow">
-              <button class="btn btn-cta" type="button" data-book-open>Book a call</button>
-            </div>
-          </div>
-
-          <div class="offer">
-            <div class="step"><span class="n">2</span>Model 2</div>
-            <h3>Pilots, customers, market research</h3>
-            <p>We help you find pilots and build external evidence fast.</p>
-            <ul>
-              <li>Ideal customer profile and use case positioning</li>
-              <li>Outreach plan and templates (email/LinkedIn)</li>
-              <li>External market research summary</li>
-              <li>Pilot offer, KPIs, and evidence tracking</li>
-            </ul>
-            <div class="ctaRow">
-              <button class="btn" type="button" data-book-open>Start with a call</button>
-            </div>
-          </div>
-
-          <div class="offer">
-            <div class="step"><span class="n">3</span>Model 3</div>
-            <h3>All-in pack</h3>
-            <p>End-to-end support: review, pilots, and planning documents.</p>
-            <ul>
-              <li>Everything in Model 1 and Model 2</li>
-              <li>Business plan and project timeline</li>
-              <li>Financial plan with assumptions</li>
-              <li>Landing page / website built for you</li>
-              <li>Evidence pack structure for partners/investors</li>
-            </ul>
-            <div class="ctaRow">
-              <button class="btn" type="button" data-book-open>Discuss on the call</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="sep"><div class="line"></div></div>
-
-        <!-- TIMELINE -->
-        <div class="stripe" id="timeline"><h2>Timeline</h2></div>
-        <div class="timeline" role="region" aria-label="How PilotForge works">
-          <div class="trow">
-            <div class="tcell">
-              <h3>Step 1 — Book a time</h3>
-              <p>Click “Book a call” and select a slot in the calendar.</p>
-            </div>
-            <div class="tcell">
-              <h3>Step 2 — Submit idea details</h3>
-              <p>Under the calendar, fill the idea form. This is what makes the call useful.</p>
-            </div>
-          </div>
-
-          <div class="trow">
-            <div class="tcell">
-              <h3>Step 3 — Review call</h3>
-              <p>We identify your strongest angle, proof gaps, and where the risk is hiding.</p>
-            </div>
-            <div class="tcell">
-              <h3>Step 4 — Choose support</h3>
-              <p>If you want help beyond the call, we move to pilots + research (Model 2) or the full pack (Model 3).</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="sep"><div class="line"></div></div>
-
-        <!-- FAQs -->
-        <div class="stripe" id="faq"><h2>FAQs</h2></div>
-        <div class="faq" role="region" aria-label="Frequently asked questions">
-
-          <div class="q" data-open="false">
-            <button type="button" aria-expanded="false">
-              <h3>Do you work only with technology and deep-tech startup projects?</h3>
-              <span class="x" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
-              </span>
-            </button>
-            <div class="a">
-              <p>
-                Yes. PilotForge focuses on technology and deep-tech startups — including AI-enabled products, software/SaaS, data-driven tools, and hardware.
-                If your idea is not technology-led, we may not be the best fit.
-              </p>
-            </div>
-          </div>
-
-          <div class="q" data-open="false">
-            <button type="button" aria-expanded="false">
-              <h3>My project is deep-tech (hardware, long R&amp;D, regulation). Can you still help?</h3>
-              <span class="x" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
-              </span>
-            </button>
-            <div class="a">
-              <p>
-                Yes. We focus on what a pilot must prove, who buys, what changes in the customer workflow, costs and unit economics, integration effort, and a realistic timeline.
-                You leave with a clear proof plan even if the product is still early.
-              </p>
-            </div>
-          </div>
-
-          <div class="q" data-open="false">
-            <button type="button" aria-expanded="false">
-              <h3>We are new — why should someone try this?</h3>
-              <span class="x" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
-              </span>
-            </button>
-            <div class="a">
-              <p>
-                We keep it low-risk. Start with one structured call and leave with a proof checklist.
-                If it is not useful, you do not continue to Model 2 or 3.
-              </p>
-            </div>
-          </div>
-
-          <div class="q" data-open="false">
-            <button type="button" aria-expanded="false">
-              <h3>Do you provide legal or immigration advice?</h3>
-              <span class="x" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
-              </span>
-            </button>
-            <div class="a">
-              <p>No. PilotForge provides validation, research, outreach planning, and business/financial planning support only.</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="sep"><div class="line"></div></div>
-
-        <div class="panel" aria-label="Call to action" style="height:340px;">
-          <div class="gridbg" aria-hidden="true"></div>
-          <div class="inner">
-            <p class="title" style="font-size:32px; margin-bottom:16px;">Start with the first step</p>
-            <button class="btn btn-cta" type="button" data-book-open style="padding:12px 18px; font-size:14px;">Book a call</button>
-            <p class="lead" style="margin-top:14px; max-width:720px; font-size:14px;">
-              Book your slot first, then share your idea details below — that gives us enough context to prepare and make the review genuinely useful.
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </main>
-
-    <!-- BOOKING PAGE -->
-    <main class="page" id="bookPage" hidden>
-      <div class="wrap bookWrap">
-        <div class="stripe"><h2>Book a call</h2></div>
-
-        <div class="block" style="padding: 22px 28px; border-top:0;">
-          <p style="margin:0; color:var(--muted); line-height:1.8;">
-            Step 1: choose a slot in the calendar. Step 2: fill the idea details form under the calendar.
+          <p class="lead">
+            PilotForge gives founders a short assessor-view review built around how business plans are commonly rejected. Our AI-assisted system checks your idea across 28 review areas and highlights where it already looks weak, unclear, easy to question, or not yet strong enough.
           </p>
-          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:16px;">
-            <button class="btn" type="button" data-book-close>Back</button>
-            <button class="btn btn-cta" type="button" data-scroll-ideas>Go to idea details</button>
+
+          <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; padding:0 12px;">
+            <button class="btn btn-cta" type="button" data-open-form>Go to form</button>
+            <a class="btn" href="#how" data-home-nav>How it works</a>
           </div>
-        </div>
 
-        <!-- Calendly -->
-        <div class="cal" aria-label="Calendly booking">
-          <div class="calendly-inline-widget"
-               data-url="https://calendly.com/pilotforge/30min?hide_event_type_details=1&background_color=15171e&text_color=ffffff&primary_color=e8e8e0"
-               style="min-width:320px;height:760px;">
+          <div style="display:flex; justify-content:center; padding:0 12px;">
+            <div class="pill" style="margin-top:18px;">
+              <span class="tag">Focus</span>
+              <span>Weakness-first review. We do not score your chances. We show where the idea is weak.</span>
+            </div>
           </div>
-        </div>
 
-        <!-- Idea details form (below calendar) -->
-        <div class="stripe" style="margin-top:40px;"><h2>Idea details</h2></div>
-        <div class="form" id="ideaDetails" aria-label="Idea details form">
-          <h3 style="font-family:'DM Serif Display', Georgia, serif; margin:0 0 10px; font-size:28px;">Innovation, viability, and scalability</h3>
-          <p style="margin:0; color:var(--muted); line-height:1.8;">Please fill this after booking so we can prepare. Keep it simple and honest.</p>
+          <div class="panel" aria-label="What this does">
+            <div class="gridbg" aria-hidden="true"></div>
+            <div class="inner">
+              <p class="title">Built around real rejection logic</p>
+              <code class="kbd">28 review areas · assessor-view analysis · weakness report by email</code>
+            </div>
+          </div>
 
-          <div class="gformBlock" style="margin-top:18px;">
-            <div style="border:1px solid #3F404B; padding:16px 16px 14px; margin:0 0 14px; background:rgba(21,23,30,0.6);">
-              <h3 style="font-family:'DM Serif Display', Georgia, serif; margin:0 0 6px; font-size:26px;">Idea Details</h3>
-              <p style="margin:0 0 10px; color:var(--muted);">Innovation, viability, and scalability</p>
-              <p style="margin:0 0 12px; color:var(--muted);">
-                Please fill this in after booking your call so I can prepare and make the review useful. Keep it simple and honest — short answers are fine.
-              </p>
-              <div style="border:1px dashed #575F72; padding:12px 12px; background:rgba(58,70,85,0.25);">
-                <p style="margin:0; color:#E8E8E0; font-size:14px; line-height:1.6;">
-                  <b>If you only have an idea, that’s completely fine.</b> Write what you have so far — we’ll use the call to shape it into something clear and testable.
-                </p>
+          <div class="sep"><div class="line"></div></div>
+
+          <div class="kpi" aria-label="What you get">
+            <div class="k">
+              <b>28 areas</b>
+              <span>We review the idea across the main areas an assessor typically questions.</span>
+            </div>
+            <div class="k">
+              <b>Weakness report</b>
+              <span>No false comfort. We point out where the idea already looks weak or unsupported.</span>
+            </div>
+            <div class="k">
+              <b>Assessor view</b>
+              <span>Structured using rejection-style logic and AI-assisted review output.</span>
+            </div>
+          </div>
+
+          <div class="sep"><div class="line"></div></div>
+
+          <div class="stripe" id="how"><h2>How it works</h2></div>
+          <div class="timeline" role="region" aria-label="How it works">
+            <div class="trow">
+              <div class="tcell">
+                <h3>Step 1 — Start the review</h3>
+                <p>Read the overview, then move to the second page to submit your idea details.</p>
+              </div>
+              <div class="tcell">
+                <h3>Step 2 — Submit your idea</h3>
+                <p>Complete the form with the main information needed for the review. High-level detail is enough.</p>
+              </div>
+            </div>
+            <div class="trow">
+              <div class="tcell">
+                <h3>Step 3 — Complete payment</h3>
+                <p>After the form, complete payment to confirm the review request.</p>
+              </div>
+              <div class="tcell">
+                <h3>Step 4 — Receive the report</h3>
+                <p>We generate the report and send it to your email, usually within one hour of form submission and payment.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="sep"><div class="line"></div></div>
+
+          <div class="stripe" id="faq"><h2>FAQs</h2></div>
+          <div class="faq" role="region" aria-label="Frequently asked questions">
+            <div class="q" data-open="false">
+              <button type="button" aria-expanded="false">
+                <h3>Do you score my chances?</h3>
+                <span class="x" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </span>
+              </button>
+              <div class="a">
+                <p>No. We do not score chances. We highlight where the idea currently looks weak, unclear, unsupported, or vulnerable to challenge.</p>
               </div>
             </div>
 
-            <div style="border:1px solid #3F404B; background:#15171e; overflow:hidden;">
+            <div class="q" data-open="false">
+              <button type="button" aria-expanded="false">
+                <h3>What is the review based on?</h3>
+                <span class="x" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </span>
+              </button>
+              <div class="a">
+                <p>The review is built around assessor-style rejection patterns and 28 review areas commonly questioned in business plan assessments.</p>
+              </div>
+            </div>
+
+            <div class="q" data-open="false">
+              <button type="button" aria-expanded="false">
+                <h3>Will my idea be copied?</h3>
+                <span class="x" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </span>
+              </button>
+              <div class="a">
+                <p>We understand this concern. You do not need to share source code, full technical architecture, or confidential implementation details. Submit only enough information for the review. If your idea is sensitive, you can provide a redacted version focused on the problem, target customer, innovation claim, and business model.</p>
+              </div>
+            </div>
+
+            <div class="q" data-open="false">
+              <button type="button" aria-expanded="false">
+                <h3>Is this legal or immigration advice?</h3>
+                <span class="x" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </span>
+              </button>
+              <div class="a">
+                <p>No. This is an independent idea review service only.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="sep"><div class="line"></div></div>
+
+          <div class="homeNote">
+            <h3>Only share what is needed</h3>
+            <p>You do not need to disclose confidential technical details, full architecture, source code, or proprietary internal methods on the website form. High-level detail is enough for the review.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="formPage" hidden>
+        <div class="wrap">
+          <div class="stripe"><h2>Submit your idea</h2></div>
+          <div class="formWrap" aria-label="Idea details form">
+            <h3>Idea details</h3>
+            <p>Start here. Submit your idea first. We use this information to generate an assessor-view review focused on weaknesses, unclear areas, and likely concerns.</p>
+
+            <div class="paymentBox">
+              <h4>What to include</h4>
+              <p>Explain the idea, what is innovative, who it is for, current stage, and anything already created. If you have an earlier generated report or notes, mention that in the form or send it after payment.</p>
+            </div>
+
+            <div class="paymentBox">
+              <h4>Confidentiality note</h4>
+              <p>Please do not share source code, full technical architecture, or proprietary internal implementation details. Submit only enough information for the review. If your concept is sensitive, you may send a redacted version focused on the problem, target customer, innovation claim, and business model.</p>
+            </div>
+
+            <div style="border:1px solid var(--line); background:var(--surface); overflow:hidden; margin-top:18px;">
               <iframe
                 title="PilotForge Idea Details"
                 src="https://docs.google.com/forms/d/e/1FAIpQLSc1iQQoafoQQF23aRecTh_QSgAkq31XRLTnUy1baOpcE2X4XA/viewform?embedded=true"
-                width="100%"
                 height="1100"
-                frameborder="0"
                 marginheight="0"
                 marginwidth="0"
-                style="border:0; display:block;"
               >Loading…</iframe>
             </div>
 
-            <p style="margin:12px 0 0; color:var(--muted);">
+            <p style="margin-top:12px;">
               If the form does not load, open it
               <a href="https://docs.google.com/forms/d/e/1FAIpQLSc1iQQoafoQQF23aRecTh_QSgAkq31XRLTnUy1baOpcE2X4XA/viewform" target="_blank" rel="noopener" style="text-decoration:underline;">in a new tab</a>.
             </p>
           </div>
-        </div>
 
-        <div class="sep"><div class="line"></div></div>
-      </div>
+          <div class="sep"><div class="line"></div></div>
+
+          <div class="stripe" id="payment"><h2>Payment</h2></div>
+          <div class="noticeBlock">
+            <h3 class="noteTitle">Complete payment to confirm the review</h3>
+            <div class="notice">
+              <p>Once the form is submitted and payment is completed, we generate the report and send it to your email, usually within one hour.</p>
+            </div>
+
+            <div class="paymentBox">
+              <h4>Review fee</h4>
+              <p><span style="text-decoration:line-through; opacity:.65;">£50</span> <strong style="font-size:20px; color:#fff; margin-left:8px;">£30</strong> for one assessor-view idea review.</p>
+            </div>
+
+            <div class="paymentBox">
+              <h4>How this works</h4>
+              <p>This is presented as an AI-assisted assessor-view system built around how business plans are commonly rejected. It does not predict chances. It identifies where the idea already looks weak, unsupported, or risky.</p>
+            </div>
+
+            <div class="payRow">
+              <a class="btn btn-cta" href="https://YOUR-PAYMENT-LINK-HERE" target="_blank" rel="noopener">Pay £30</a>
+              <button class="btn" type="button" data-back-home>Back</button>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer>
       <div class="wrap">
         <div class="footTop">
           <div class="footCol">
-            <h2>Build proof. Win pilots.</h2>
-            <p style="margin-top:10px;">
-              PilotForge is a validation and planning service for technology and deep-tech founders.
-              We help you clarify innovation, viability, and scalability, then create the evidence and documents you need.
-            </p>
+            <h2>Assessor-view idea review.</h2>
+            <p style="margin-top:10px;">PilotForge provides a short AI-assisted review system built around real rejection logic and 28 review areas. The output focuses on weaknesses, not chance scoring.</p>
             <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;">
-              <button class="btn btn-cta" type="button" data-book-open>Book a call</button>
-              <a class="btn" href="#offers" data-home-nav>Offers</a>
+              <button class="btn btn-cta" type="button" data-open-form>Start review</button>
+              <a class="btn" href="#top" id="backToTop">Top</a>
             </div>
-            <p style="margin-top:14px; max-width:560px; color:var(--muted2); line-height:1.6; font-size:13px;">
-              Disclaimer: PilotForge provides business validation and planning support only and does not provide legal, immigration, or financial advice.
-            </p>
+            <p style="margin-top:14px; max-width:560px; color:var(--muted2); line-height:1.6; font-size:13px;">Disclaimer: PilotForge provides idea assessment support only and does not provide legal, immigration, or financial advice.</p>
           </div>
 
           <div class="footLinks" aria-label="Footer links">
             <div>
               <h3>Sections</h3>
-              <a href="#offers" data-home-nav>Offers</a>
-              <a href="#timeline" data-home-nav>Timeline</a>
+              <a href="#how" data-home-nav>How it works</a>
               <a href="#faq" data-home-nav>FAQs</a>
+              <button class="btn" type="button" data-open-form style="margin-top:10px;">Go to form</button>
             </div>
             <div>
               <h3>Contact</h3>
               <a href="mailto:pilotforge@outlook.com">pilotforge@outlook.com</a>
-              <a href="#top" id="backToTop">Back to top</a>
             </div>
           </div>
         </div>
@@ -1027,117 +706,101 @@
 
       <div class="watermark" aria-hidden="true">PilotForge</div>
     </footer>
-
   </div>
 
-  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
   <script>
-    // Next-page booking flow
     const homePage = document.getElementById('homePage');
-    const bookPage = document.getElementById('bookPage');
+    const formPage = document.getElementById('formPage');
 
-    function openBooking(){
+    function openFormPage(){
       homePage.hidden = true;
-      bookPage.hidden = false;
+      formPage.hidden = false;
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      history.replaceState(null, '', '#book');
+      history.replaceState(null, '', '#form-page');
     }
 
-    function closeBooking({ scrollTop = true } = {}){
-      bookPage.hidden = true;
+    function openHomePage(target){
+      formPage.hidden = true;
       homePage.hidden = false;
-      if (scrollTop) window.scrollTo({ top: 0, behavior: 'smooth' });
-      history.replaceState(null, '', '#top');
-    }
-
-    // Open booking
-    document.querySelectorAll('[data-book-open]').forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        openBooking();
-      });
-    });
-
-    // Close booking
-    document.querySelectorAll('[data-book-close]').forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        closeBooking();
-      });
-    });
-
-    // Brand link always returns home
-    const homeLink = document.getElementById('homeLink');
-    if (homeLink) {
-      homeLink.addEventListener('click', (e) => {
-        const href = homeLink.getAttribute('href');
-        if (!href || !href.startsWith('#')) return;
-        e.preventDefault();
-        if (!bookPage.hidden) closeBooking({ scrollTop: false });
-        requestAnimationFrame(() => {
-          document.getElementById('top')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      requestAnimationFrame(() => {
+        if (target) {
+          document.querySelector(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', target);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
           history.replaceState(null, '', '#top');
-        });
+        }
       });
     }
 
-    // If user loads with #book
-    if (window.location.hash === '#book') openBooking();
-
-    // Scroll to idea details on booking page
-    document.querySelectorAll('[data-scroll-ideas]').forEach(el => {
+    document.querySelectorAll('[data-open-form]').forEach(el => {
       el.addEventListener('click', (e) => {
         e.preventDefault();
-        document.getElementById('ideaDetails')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        openFormPage();
       });
     });
 
-    // Home navigation (works even if booking page is open)
+    document.querySelectorAll('[data-back-home]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        openHomePage('#top');
+      });
+    });
+
     document.querySelectorAll('[data-home-nav]').forEach(a => {
       a.addEventListener('click', (e) => {
         const href = a.getAttribute('href');
         if (!href || !href.startsWith('#')) return;
         e.preventDefault();
+        openHomePage(href);
+      });
+    });
 
-        if (!bookPage.hidden) closeBooking({ scrollTop: false });
-
+    document.querySelectorAll('[data-form-nav]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
+        e.preventDefault();
+        openFormPage();
         requestAnimationFrame(() => {
-          const target = document.querySelector(href);
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
           history.replaceState(null, '', href);
         });
       });
     });
 
-    // Back to top (works even if booking page is open)
+    const homeLink = document.getElementById('homeLink');
+    if (homeLink) {
+      homeLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        openHomePage('#top');
+      });
+    }
+
     const backToTop = document.getElementById('backToTop');
     if (backToTop) {
       backToTop.addEventListener('click', (e) => {
         e.preventDefault();
-        if (!bookPage.hidden) closeBooking({ scrollTop: false });
-        requestAnimationFrame(() => {
-          document.getElementById('top')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          history.replaceState(null, '', '#top');
-        });
+        openHomePage('#top');
       });
     }
 
-    // FAQ accordion (shows answers when you click)
+    if (window.location.hash === '#form-page' || window.location.hash === '#payment') {
+      openFormPage();
+    }
+
     document.querySelectorAll('.faq .q button').forEach(btn => {
       btn.addEventListener('click', () => {
         const q = btn.closest('.q');
         if (!q) return;
-
         const isOpen = q.getAttribute('data-open') === 'true';
 
-        // Close others
         document.querySelectorAll('.faq .q').forEach(other => {
           other.setAttribute('data-open', 'false');
           const b = other.querySelector('button');
           if (b) b.setAttribute('aria-expanded', 'false');
         });
 
-        // Toggle current
         q.setAttribute('data-open', String(!isOpen));
         btn.setAttribute('aria-expanded', String(!isOpen));
       });
