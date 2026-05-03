@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PilotForge — Assessor-view idea review</title>
-  <meta name="description" content="PilotForge provides a short assessor-view idea review built around real rejection patterns and 28 review areas. Start on the first page, then move to the second page to submit your idea and complete payment." />
+  <title>PilotForge — Business Plan Review</title>
+  <meta name="description" content="PilotForge provides an independent business plan review built around common weaknesses and 28 review areas. Submit your idea and receive a structured report within one hour." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -335,7 +335,8 @@
     .faq,
     .formWrap,
     .noticeBlock,
-    .homeNote{
+    .homeNote,
+    .legalPage{
       background:rgba(43,26,33,.88);
       border-left:1px solid var(--line);
       border-right:1px solid var(--line);
@@ -411,6 +412,15 @@
     .q[data-open="true"] .a{max-height:280px;opacity:1}
     .q[data-open="true"] .x{transform:rotate(45deg)}
 
+    /* Legal pages */
+    .legalPage{padding:36px 28px}
+    .legalPage h2{font-family:"DM Serif Display",Georgia,serif;font-size:32px;margin:0 0 8px}
+    .legalPage .legalDate{font-size:13px;color:var(--muted2);margin-bottom:32px}
+    .legalPage h3{font-family:"DM Serif Display",Georgia,serif;font-size:20px;margin:28px 0 8px}
+    .legalPage p,.legalPage li{color:var(--muted);line-height:1.9;font-size:15px;margin:0 0 10px}
+    .legalPage ul{padding-left:20px;margin:0 0 10px}
+    .legalPage a{text-decoration:underline;color:var(--muted2)}
+
     footer{
       margin-top:auto;
       border-top:1px solid rgba(255,255,255,.22);
@@ -429,6 +439,8 @@
     .footLinks h3{margin:0 0 12px;font-size:14px;font-weight:500}
     .footLinks a{display:block;color:var(--muted);margin:10px 0;font-size:14px}
     .footLinks a:hover{color:#fff}
+    .footLinks button{display:block;background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:0;margin:10px 0;font-family:inherit}
+    .footLinks button:hover{color:#fff}
     .watermark{
       position:absolute;
       left:0;right:0;bottom:-10px;
@@ -477,17 +489,18 @@
     </header>
 
     <main>
+      <!-- HOME PAGE -->
       <section class="page" id="homePage">
         <div class="wrap hero" id="top">
-          <div class="eyebrow">Assessor-view review system</div>
+          <div class="eyebrow">Independent business plan review</div>
 
           <h1 class="h1">
-            <span class="muted">See</span> <span class="muted">how</span> <span class="muted">your</span> <span class="muted">idea</span><br>
-            <span class="muted">looks</span> <span class="muted">from</span> <span class="muted">an</span> <span class="muted">assessor</span> <span class="muted">view</span>
+            <span class="muted">See</span> <span class="muted">where</span> <span class="muted">your</span><br>
+            <span class="muted">business</span> <span class="muted">plan</span> <span class="muted">is</span> <span class="muted">weak</span>
           </h1>
 
           <p class="lead">
-            PilotForge gives founders a short assessor-view review built around how business plans are commonly rejected. Our AI-assisted system checks your idea across 28 review areas and highlights where it already looks weak, unclear, easy to question, or not yet strong enough.
+            PilotForge gives founders a structured business plan review built around common weaknesses and gaps. Our AI-assisted system checks your idea across 28 review areas and highlights where it looks unclear, unsupported, or commercially vulnerable.
           </p>
 
           <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; padding:0 12px;">
@@ -505,8 +518,8 @@
           <div class="panel" aria-label="What this does">
             <div class="gridbg" aria-hidden="true"></div>
             <div class="inner">
-              <p class="title">Built around real rejection logic</p>
-              <code class="kbd">28 review areas · assessor-view analysis · weakness report by email</code>
+              <p class="title">Built around common business plan weaknesses</p>
+              <code class="kbd">28 review areas · independent analysis · weakness report by email</code>
             </div>
           </div>
 
@@ -515,15 +528,15 @@
           <div class="kpi" aria-label="What you get">
             <div class="k">
               <b>28 areas</b>
-              <span>We review the idea across the main areas an assessor typically questions.</span>
+              <span>We review the idea across 28 areas commonly questioned in business plan reviews.</span>
             </div>
             <div class="k">
               <b>Weakness report</b>
               <span>No false comfort. We point out where the idea already looks weak or unsupported.</span>
             </div>
             <div class="k">
-              <b>Assessor view</b>
-              <span>Structured using rejection-style logic and AI-assisted review output.</span>
+              <b>Independent view</b>
+              <span>Structured around commercial viability, innovation strength, and scalability gaps.</span>
             </div>
           </div>
 
@@ -565,7 +578,7 @@
                 </span>
               </button>
               <div class="a">
-                <p>No. We do not score chances. We highlight where the idea currently looks weak, unclear, unsupported, or vulnerable to challenge.</p>
+                <p>No. We do not score chances or predict outcomes. We highlight where the idea currently looks weak, unclear, unsupported, or commercially vulnerable.</p>
               </div>
             </div>
 
@@ -577,7 +590,7 @@
                 </span>
               </button>
               <div class="a">
-                <p>The review is built around assessor-style rejection patterns and 28 review areas commonly questioned in business plan assessments.</p>
+                <p>The review is built around 28 areas commonly questioned in business plan assessments, including innovation, market size, competitive position, revenue model, and scalability.</p>
               </div>
             </div>
 
@@ -601,7 +614,19 @@
                 </span>
               </button>
               <div class="a">
-                <p>No. This is an independent idea review service only.</p>
+                <p>No. PilotForge is an independent business plan review service only. We do not provide legal, immigration, or financial advice. Please consult a qualified professional for advice of that nature.</p>
+              </div>
+            </div>
+
+            <div class="q" data-open="false">
+              <button type="button" aria-expanded="false">
+                <h3>What is your refund policy?</h3>
+                <span class="x" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </span>
+              </button>
+              <div class="a">
+                <p>If we are unable to deliver your report within 24 hours of receiving both your completed form and payment, you are entitled to a full refund. As we begin processing immediately on receipt, we are unable to offer refunds once the report has been delivered. Please contact us at pilotforge@outlook.com with any concerns.</p>
               </div>
             </div>
           </div>
@@ -610,26 +635,27 @@
 
           <div class="homeNote">
             <h3>Only share what is needed</h3>
-            <p>You do not need to disclose confidential technical details, full architecture, source code, or proprietary internal methods on the website form. High-level detail is enough for the review.</p>
+            <p>You do not need to disclose confidential technical details, full architecture, source code, or proprietary internal methods. High-level detail is enough for the review. See our <button type="button" data-open-privacy style="background:none;border:none;color:var(--muted2);cursor:pointer;font-size:inherit;font-family:inherit;padding:0;text-decoration:underline;">Privacy Policy</button> for how we handle your information.</p>
           </div>
         </div>
       </section>
 
+      <!-- FORM PAGE -->
       <section class="page" id="formPage" hidden>
         <div class="wrap">
           <div class="stripe"><h2>Submit your idea</h2></div>
           <div class="formWrap" aria-label="Idea details form">
             <h3>Idea details</h3>
-            <p>Start here. Submit your idea first. We use this information to generate an assessor-view review focused on weaknesses, unclear areas, and likely concerns.</p>
+            <p>Start here. Submit your idea first. We use this information to generate a business plan review focused on weaknesses, unclear areas, and likely concerns.</p>
 
             <div class="paymentBox">
               <h4>What to include</h4>
-              <p>Explain the idea, what is innovative, who it is for, current stage, and anything already created. If you have an earlier generated report or notes, mention that in the form or send it after payment.</p>
+              <p>Explain the idea, what is innovative, who it is for, current stage, and anything already created. If you have earlier notes or a draft plan, mention that in the form or send it after payment.</p>
             </div>
 
             <div class="paymentBox">
               <h4>Confidentiality note</h4>
-              <p>Please do not share source code, full technical architecture, or proprietary internal implementation details. Submit only enough information for the review. If your concept is sensitive, you may send a redacted version focused on the problem, target customer, innovation claim, and business model.</p>
+              <p>Please do not share source code, full technical architecture, or proprietary internal implementation details. Submit only enough information for the review. If your concept is sensitive, you may send a redacted version focused on the problem, target customer, innovation claim, and business model. Your information is handled in accordance with our <button type="button" data-open-privacy style="background:none;border:none;color:var(--muted2);cursor:pointer;font-size:inherit;font-family:inherit;padding:0;text-decoration:underline;">Privacy Policy</button>.</p>
             </div>
 
             <div style="border:1px solid var(--line); background:var(--surface); overflow:hidden; margin-top:18px;">
@@ -659,17 +685,144 @@
 
             <div class="paymentBox">
               <h4>Review fee</h4>
-              <p><span style="text-decoration:line-through; opacity:.65;">£50</span> <strong style="font-size:20px; color:#fff; margin-left:8px;">£30</strong> for one assessor-view idea review.</p>
+              <p><span style="text-decoration:line-through; opacity:.65;">£50</span> <strong style="font-size:20px; color:#fff; margin-left:8px;">£30</strong> for one independent business plan review.</p>
             </div>
 
             <div class="paymentBox">
-              <h4>How this works</h4>
-              <p>This is presented as an AI-assisted assessor-view system built around how business plans are commonly rejected. It does not predict chances. It identifies where the idea already looks weak, unsupported, or risky.</p>
+              <h4>What you receive</h4>
+              <p>An AI-assisted review across 28 business plan areas, identifying where the idea looks weak, unsupported, or commercially vulnerable. The report does not predict chances or constitute professional advice of any kind.</p>
             </div>
+
+            <div class="paymentBox">
+              <h4>Refunds</h4>
+              <p>If we cannot deliver your report within 24 hours of receiving your completed form and payment, you are entitled to a full refund. Contact us at <a href="mailto:pilotforge@outlook.com" style="color:var(--muted2);">pilotforge@outlook.com</a>.</p>
+            </div>
+
+            <p style="font-size:13px; color:var(--muted2); margin-top:12px; margin-bottom:6px;">
+              By completing payment you agree to our
+              <button type="button" data-open-terms style="background:none;border:none;color:var(--muted2);cursor:pointer;font-size:inherit;font-family:inherit;padding:0;text-decoration:underline;">Terms &amp; Conditions</button>
+              and
+              <button type="button" data-open-privacy style="background:none;border:none;color:var(--muted2);cursor:pointer;font-size:inherit;font-family:inherit;padding:0;text-decoration:underline;">Privacy Policy</button>.
+            </p>
 
             <div class="payRow">
               <a class="btn btn-cta" href="https://buy.stripe.com/cNi9AT4p09lX9fx6Bl1ck00" target="_blank" rel="noopener">Pay £30</a>
               <button class="btn" type="button" data-back-home>Back</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TERMS PAGE -->
+      <section class="page" id="termsPage" hidden>
+        <div class="wrap">
+          <div class="stripe"><h2>Terms &amp; Conditions</h2></div>
+          <div class="legalPage">
+            <h2>Terms &amp; Conditions</h2>
+            <p class="legalDate">Last updated: May 2025</p>
+
+            <h3>1. Who we are</h3>
+            <p>PilotForge is operated as an independent business review service. Contact: <a href="mailto:pilotforge@outlook.com">pilotforge@outlook.com</a>.</p>
+
+            <h3>2. What we provide</h3>
+            <p>PilotForge provides an AI-assisted independent business plan review across 28 review areas. The output is a written report identifying weaknesses, gaps, and areas of commercial vulnerability in the submitted idea.</p>
+            <p>Our service is a business documentation and analysis tool only. We do not provide legal, immigration, financial, or professional advice of any kind. The report does not constitute a professional opinion and must not be relied upon as such.</p>
+
+            <h3>3. What we do not provide</h3>
+            <ul>
+              <li>Immigration advice or guidance of any kind</li>
+              <li>Legal advice</li>
+              <li>Financial or investment advice</li>
+              <li>Endorsement recommendations or predictions</li>
+              <li>Guarantees of any outcome</li>
+            </ul>
+
+            <h3>4. Payment</h3>
+            <p>The review fee is £30 per submission. Payment is processed securely through Stripe. By completing payment you confirm you have read and agree to these Terms.</p>
+
+            <h3>5. Delivery</h3>
+            <p>We aim to deliver your report by email within one hour of receiving both your completed form and confirmed payment. Delivery times may vary. If the report is not delivered within 24 hours, you are entitled to a full refund.</p>
+
+            <h3>6. Refunds</h3>
+            <p>A full refund will be issued if we fail to deliver your report within 24 hours of receiving your completed form and payment. Once the report has been delivered, we are unable to offer refunds. To request a refund, contact <a href="mailto:pilotforge@outlook.com">pilotforge@outlook.com</a>.</p>
+
+            <h3>7. Your responsibilities</h3>
+            <p>You are responsible for the accuracy of the information you submit. You must not submit false, misleading, or unlawful content. You retain ownership of any idea or information you submit.</p>
+
+            <h3>8. Limitation of liability</h3>
+            <p>PilotForge provides the review on an "as is" basis. To the fullest extent permitted by law, we are not liable for any loss, damage, or consequence arising from use of the report or reliance on its contents.</p>
+
+            <h3>9. Governing law</h3>
+            <p>These Terms are governed by the laws of England and Wales.</p>
+
+            <h3>10. Changes</h3>
+            <p>We may update these Terms at any time. Continued use of the service constitutes acceptance of the updated Terms.</p>
+
+            <div style="margin-top:28px;">
+              <button class="btn btn-cta" type="button" data-back-home>Back to home</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRIVACY PAGE -->
+      <section class="page" id="privacyPage" hidden>
+        <div class="wrap">
+          <div class="stripe"><h2>Privacy Policy</h2></div>
+          <div class="legalPage">
+            <h2>Privacy Policy</h2>
+            <p class="legalDate">Last updated: May 2025</p>
+
+            <h3>1. Who we are</h3>
+            <p>PilotForge is operated as an independent business review service based in the United Kingdom. Contact: <a href="mailto:pilotforge@outlook.com">pilotforge@outlook.com</a>.</p>
+
+            <h3>2. What data we collect</h3>
+            <p>When you submit the review form, we collect:</p>
+            <ul>
+              <li>Your email address</li>
+              <li>Your name (if provided)</li>
+              <li>Information about your business idea as submitted in the form</li>
+              <li>Payment confirmation data (processed by Stripe — we do not store card details)</li>
+            </ul>
+
+            <h3>3. How we use your data</h3>
+            <p>We use your data solely to:</p>
+            <ul>
+              <li>Generate and deliver your business plan review report</li>
+              <li>Respond to queries or refund requests</li>
+              <li>Comply with legal obligations</li>
+            </ul>
+            <p>We do not use your data for marketing without your explicit consent. We do not sell or share your data with third parties, except as necessary to operate the service (see below).</p>
+
+            <h3>4. Third-party processors</h3>
+            <ul>
+              <li><strong>Google Forms</strong> — used to collect idea submission data. Subject to Google's privacy policy.</li>
+              <li><strong>Stripe</strong> — used to process payments. Subject to Stripe's privacy policy. We do not store card details.</li>
+              <li><strong>Microsoft (Outlook)</strong> — used for email communication.</li>
+            </ul>
+
+            <h3>5. Data retention</h3>
+            <p>We retain submitted data for up to 12 months for operational and compliance purposes, after which it is deleted. You may request earlier deletion at any time.</p>
+
+            <h3>6. Your rights</h3>
+            <p>Under UK GDPR you have the right to:</p>
+            <ul>
+              <li>Access the personal data we hold about you</li>
+              <li>Request correction of inaccurate data</li>
+              <li>Request deletion of your data</li>
+              <li>Object to processing</li>
+              <li>Lodge a complaint with the ICO at <a href="https://ico.org.uk" target="_blank" rel="noopener">ico.org.uk</a></li>
+            </ul>
+            <p>To exercise any of these rights, contact <a href="mailto:pilotforge@outlook.com">pilotforge@outlook.com</a>.</p>
+
+            <h3>7. Cookies</h3>
+            <p>This website does not use tracking cookies. Embedded third-party services (Google Forms, Stripe) may set their own cookies subject to their own policies.</p>
+
+            <h3>8. Changes</h3>
+            <p>We may update this policy at any time. The current version is always available on this page.</p>
+
+            <div style="margin-top:28px;">
+              <button class="btn btn-cta" type="button" data-back-home>Back to home</button>
             </div>
           </div>
         </div>
@@ -680,13 +833,15 @@
       <div class="wrap">
         <div class="footTop">
           <div class="footCol">
-            <h2>Assessor-view idea review.</h2>
-            <p style="margin-top:10px;">PilotForge provides a short AI-assisted review system built around real rejection logic and 28 review areas. The output focuses on weaknesses, not chance scoring.</p>
+            <h2>Independent business plan review.</h2>
+            <p style="margin-top:10px;">PilotForge provides a short AI-assisted review across 28 business plan areas. The output focuses on weaknesses and commercial gaps, not chance scoring.</p>
             <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;">
               <button class="btn btn-cta" type="button" data-open-form>Start review</button>
               <a class="btn" href="#top" id="backToTop">Top</a>
             </div>
-            <p style="margin-top:14px; max-width:560px; color:var(--muted2); line-height:1.6; font-size:13px;">Disclaimer: PilotForge provides idea assessment support only and does not provide legal, immigration, or financial advice.</p>
+            <p style="margin-top:14px; max-width:560px; color:var(--muted2); line-height:1.6; font-size:13px;">
+              Disclaimer: PilotForge provides business plan review support only and does not provide legal, immigration, or financial advice.
+            </p>
           </div>
 
           <div class="footLinks" aria-label="Footer links">
@@ -694,7 +849,12 @@
               <h3>Sections</h3>
               <a href="#how" data-home-nav>How it works</a>
               <a href="#faq" data-home-nav>FAQs</a>
-              <button class="btn" type="button" data-open-form style="margin-top:10px;">Go to form</button>
+              <button type="button" data-open-form>Go to form</button>
+            </div>
+            <div>
+              <h3>Legal</h3>
+              <button type="button" data-open-terms>Terms &amp; Conditions</button>
+              <button type="button" data-open-privacy>Privacy Policy</button>
             </div>
             <div>
               <h3>Contact</h3>
@@ -709,98 +869,87 @@
   </div>
 
   <script>
-    const homePage = document.getElementById('homePage');
-    const formPage = document.getElementById('formPage');
+    const pages = {
+      home: document.getElementById('homePage'),
+      form: document.getElementById('formPage'),
+      terms: document.getElementById('termsPage'),
+      privacy: document.getElementById('privacyPage'),
+    };
 
-    function openFormPage(){
-      homePage.hidden = true;
-      formPage.hidden = false;
+    function showPage(name, scrollTarget) {
+      Object.values(pages).forEach(p => p.hidden = true);
+      pages[name].hidden = false;
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      history.replaceState(null, '', '#form-page');
+      if (scrollTarget) {
+        requestAnimationFrame(() => {
+          document.querySelector(scrollTarget)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
     }
 
-    function openHomePage(target){
-      formPage.hidden = true;
-      homePage.hidden = false;
-      requestAnimationFrame(() => {
-        if (target) {
-          document.querySelector(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          history.replaceState(null, '', target);
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          history.replaceState(null, '', '#top');
-        }
-      });
-    }
-
+    // Open form
     document.querySelectorAll('[data-open-form]').forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        openFormPage();
-      });
+      el.addEventListener('click', () => showPage('form'));
     });
 
+    // Back to home
     document.querySelectorAll('[data-back-home]').forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        openHomePage('#top');
-      });
+      el.addEventListener('click', () => showPage('home'));
     });
 
+    // Home nav anchors
     document.querySelectorAll('[data-home-nav]').forEach(a => {
       a.addEventListener('click', (e) => {
         const href = a.getAttribute('href');
-        if (!href || !href.startsWith('#')) return;
+        if (!href?.startsWith('#')) return;
         e.preventDefault();
-        openHomePage(href);
+        showPage('home', href);
       });
     });
 
+    // Form nav anchors
     document.querySelectorAll('[data-form-nav]').forEach(a => {
       a.addEventListener('click', (e) => {
         const href = a.getAttribute('href');
-        if (!href || !href.startsWith('#')) return;
+        if (!href?.startsWith('#')) return;
         e.preventDefault();
-        openFormPage();
-        requestAnimationFrame(() => {
-          document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          history.replaceState(null, '', href);
-        });
+        showPage('form', href);
       });
     });
 
-    const homeLink = document.getElementById('homeLink');
-    if (homeLink) {
-      homeLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        openHomePage('#top');
-      });
-    }
+    // Terms & Privacy buttons
+    document.querySelectorAll('[data-open-terms]').forEach(el => {
+      el.addEventListener('click', () => showPage('terms'));
+    });
+    document.querySelectorAll('[data-open-privacy]').forEach(el => {
+      el.addEventListener('click', () => showPage('privacy'));
+    });
 
-    const backToTop = document.getElementById('backToTop');
-    if (backToTop) {
-      backToTop.addEventListener('click', (e) => {
-        e.preventDefault();
-        openHomePage('#top');
-      });
-    }
+    // Logo / back to top
+    document.getElementById('homeLink')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      showPage('home');
+    });
+    document.getElementById('backToTop')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      showPage('home');
+    });
 
+    // Hash routing
     if (window.location.hash === '#form-page' || window.location.hash === '#payment') {
-      openFormPage();
+      showPage('form');
     }
 
+    // FAQ accordion
     document.querySelectorAll('.faq .q button').forEach(btn => {
       btn.addEventListener('click', () => {
         const q = btn.closest('.q');
         if (!q) return;
         const isOpen = q.getAttribute('data-open') === 'true';
-
         document.querySelectorAll('.faq .q').forEach(other => {
           other.setAttribute('data-open', 'false');
-          const b = other.querySelector('button');
-          if (b) b.setAttribute('aria-expanded', 'false');
+          other.querySelector('button')?.setAttribute('aria-expanded', 'false');
         });
-
         q.setAttribute('data-open', String(!isOpen));
         btn.setAttribute('aria-expanded', String(!isOpen));
       });
