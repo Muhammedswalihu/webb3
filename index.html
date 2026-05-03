@@ -845,8 +845,8 @@ function dlPDF(){
         bc.forEach(c=>{
           cy(20);doc.setFontSize(8);doc.setTextColor(...mt);doc.setFont('helvetica','normal');doc.text('Q'+String(c.num).padStart(2,'0'),ml,y);
           doc.setFontSize(10);doc.setTextColor(...nv);doc.setFont('helvetica','bold');doc.text(c.title||'',ml+11,y);
-          const col=sc2(c.status);doc.setFillColor(...col);doc.roundedRect(pw-mr-22,y-4,22,6,1,1,'F');
-          doc.setFontSize(6);doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.text(c.status||'',pw-mr-11,y,{align:'center'});y+=7;
+          const col=sc2(c.status);const badgeW=c.status==="HIGH RISK"?28:22;doc.setFillColor(...col);doc.roundedRect(pw-mr-badgeW,y-4,badgeW,6,1,1,"F");
+          doc.setFontSize(6);doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.text(c.status||"",pw-mr-badgeW/2,y,{align:"center"});y+=7;
           if(c.commentary){doc.setFontSize(9);doc.setTextColor(...mt);doc.setFont('helvetica','normal');const cl=doc.splitTextToSize(c.commentary,tw-4);cy(cl.length*4.5+2);doc.text(cl,ml+4,y);y+=cl.length*4.5+2;}
           if(c.improve){doc.setFontSize(8);doc.setTextColor(...gd);doc.setFont('helvetica','bold');cy(5);doc.text('TO IMPROVE',ml+6,y);y+=4;doc.setTextColor(...mt);doc.setFont('helvetica','normal');const il=doc.splitTextToSize(c.improve,tw-8);cy(il.length*4+3);doc.text(il,ml+6,y);y+=il.length*4+4;}
           doc.setDrawColor(230,232,236);doc.setLineWidth(0.2);doc.line(ml,y,pw-mr,y);y+=5;
