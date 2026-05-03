@@ -766,8 +766,8 @@ async function runAnalysis(){
   showPage('processing');
   const ps=['ps0','ps1','ps2','ps3','ps4'];
   ps.forEach((id,i)=>setTimeout(()=>{document.querySelectorAll('.pstep').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(i>0)document.getElementById(ps[i-1]).classList.add('done');},i*12000));
-  const key=localStorage.getItem('pf_apikey');
-  if(!key){alert('API key not configured. Visit /#admin to set up.');showPage('home');return;}
+
+
   try{
     const res=await fetch('https://pilotforge-api.pilotforge.workers.dev/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-6',max_tokens:8000,system:getSP(),messages:[{role:'user',content:getSub()}]})});
     const data=await res.json();
@@ -779,7 +779,7 @@ async function runAnalysis(){
     rdata.sector=fd['f-sector']||'N/A';rdata.stage=fd['f-stage']||'N/A';
     rdata.reviewDate=new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'});
     rdata.optIn=fd.optIn;rdata.email=fd['f-email'];
-    localStorage.removeItem('pf_fd');renderReport();showPage('report');if(rdata.optIn)sendOptInEmail(rdata);
+    rdata.optIn=fd.optIn;rdata.email=fd["f-email"];const shouldEmail=fd.optIn===true;const emailTo=fd["f-email"];localStorage.removeItem("pf_fd");renderReport();showPage("report");if(shouldEmail){console.log("Firing opt-in email");sendOptInEmail(rdata);}
   }catch(err){console.error(err);alert('Error generating report: '+err.message+'\n\nPlease contact pilotforge@outlook.com');showPage('home');}
 }
 
