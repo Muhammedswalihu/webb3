@@ -769,7 +769,7 @@ async function runAnalysis(){
   const key=localStorage.getItem('pf_apikey');
   if(!key){alert('API key not configured. Visit /#admin to set up.');showPage('home');return;}
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-opus-4-6',max_tokens:8000,system:getSP(),messages:[{role:'user',content:getSub()}]})});
+    const res=await fetch('https://pilotforge-api.pilotforge.workers.dev/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-6',max_tokens:8000,system:getSP(),messages:[{role:'user',content:getSub()}]})});
     const data=await res.json();
     if(!res.ok)throw new Error(data.error?.message||'API error');
     const txt=data.content[0].text;
