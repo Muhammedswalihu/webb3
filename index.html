@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,400&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     :root{--bg:#fff;--bg2:#f7f8fa;--bg3:#f0f1f4;--ink:#0a0e1a;--ink2:#2d3142;--muted:#6b7280;--muted2:#9ca3af;--border:#e5e7eb;--border2:#d1d5db;--gold:#c8972a;--gold2:#f0c060;--pass:#16a34a;--weak:#d97706;--fail:#dc2626;--missing:#6b7280;--hr:#991b1b;--max:1140px;--r:4px}
     *{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
@@ -724,6 +725,25 @@ function setupContactForm(formId, nameId, emailId, subjectId, messageId, statusI
 setupContactForm('contactForm','cf-name','cf-email','cf-subject','cf-message','contactStatus');
 setupContactForm('contactForm2','cf2-name','cf2-email','cf2-subject','cf2-message','contactStatus2');
 
+// EMAILJS — opt-in notification
+emailjs.init('F5JBssrMyxYQnO4Uy');
+
+function sendOptInEmail(data) {
+  emailjs.send('service_2hffuzn', 'template_uq3zq8e', {
+    founder_name: data.founderName || '',
+    founder_email: data.email || '',
+    business_name: data.bizName || '',
+    sector: data.sector || '',
+    stage: data.stage || '',
+    name: data.founderName || '',
+    email: data.email || '',
+  }).then(() => {
+    console.log('Opt-in notification sent.');
+  }).catch((err) => {
+    console.warn('EmailJS error:', err);
+  });
+}
+
 window.addEventListener('DOMContentLoaded',()=>{
   if(window.location.search.includes('paid=true')){const s=localStorage.getItem('pf_fd');if(s){fd=JSON.parse(s);runAnalysis();}}
   if(window.location.hash==='#admin')showPage('admin');
@@ -759,7 +779,7 @@ async function runAnalysis(){
     rdata.sector=fd['f-sector']||'N/A';rdata.stage=fd['f-stage']||'N/A';
     rdata.reviewDate=new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'});
     rdata.optIn=fd.optIn;rdata.email=fd['f-email'];
-    localStorage.removeItem('pf_fd');renderReport();showPage('report');
+    localStorage.removeItem('pf_fd');renderReport();showPage('report');if(rdata.optIn)sendOptInEmail(rdata);
   }catch(err){console.error(err);alert('Error generating report: '+err.message+'\n\nPlease contact pilotforge@outlook.com');showPage('home');}
 }
 
