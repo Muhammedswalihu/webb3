@@ -115,7 +115,6 @@
     .contact-section{padding:80px 0;border-bottom:1px solid var(--border)}
     .contact-grid{display:grid;grid-template-columns:1fr;gap:48px;margin-top:44px}
     @media(min-width:768px){.contact-grid{grid-template-columns:1fr 1fr}}
-    .contact-info{}
     .contact-info h3{font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:12px}
     .contact-info p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:20px}
     .contact-detail{display:flex;align-items:center;gap:10px;padding:14px 0;border-bottom:1px solid var(--border);font-size:14px}
@@ -365,6 +364,10 @@
           <div><span>Email us at</span><br><strong>pilotforge@outlook.com</strong></div>
         </div>
         <div class="contact-detail">
+          <div class="icon">☎</div>
+          <div><span>Call or WhatsApp</span><br><strong>+44 7364123404</strong></div>
+        </div>
+        <div class="contact-detail">
           <div class="icon">⏱</div>
           <div><span>Response time</span><br><strong>Usually within a few hours</strong></div>
         </div>
@@ -550,6 +553,7 @@
         <h3>How we can help</h3>
         <p>Use this form for any questions or issues. We'll reply directly to your email, usually within a few hours.</p>
         <div class="contact-detail"><div class="icon">✉</div><div><span>Email us directly</span><br><strong>pilotforge@outlook.com</strong></div></div>
+        <div class="contact-detail"><div class="icon">☎</div><div><span>Call or WhatsApp</span><br><strong>+44 7364123404</strong></div></div>
         <div class="contact-detail"><div class="icon">💳</div><div><span>Payment issues</span><br><strong>We'll resolve or refund promptly</strong></div></div>
         <div class="contact-detail"><div class="icon">📋</div><div><span>Report not received?</span><br><strong>Include your email & business name</strong></div></div>
         <div class="contact-detail"><div class="icon">🤝</div><div><span>Business plan support</span><br><strong>We offer full documentation services</strong></div></div>
@@ -625,6 +629,7 @@
       <div class="adiv"></div>
       <h2 style="font-family:'Fraunces',serif;font-size:20px;margin-bottom:6px">Stripe Setup</h2>
       <p>Set Stripe success redirect to: <code style="background:var(--bg3);padding:3px 8px;font-size:12px;border-radius:3px">https://pilotforge.uk/?paid=true</code></p>
+      <p>Recommended cancel redirect: <code style="background:var(--bg3);padding:3px 8px;font-size:12px;border-radius:3px">https://pilotforge.uk/?cancelled=true</code></p>
       <div class="field"><label>Stripe Payment Link URL</label><input type="url" id="stripeInput" placeholder="https://buy.stripe.com/..."/></div>
       <div style="display:flex;gap:10px"><button class="btn btn-p" onclick="saveStripe()">Save Stripe Link</button></div>
       <div id="smsg" class="amsg"></div>
@@ -648,7 +653,7 @@
       </div>
       <div class="fcol"><h4>Product</h4><button onclick="showPage('form')">Start Review</button><a data-goto="home" data-anchor="#criteria">Criteria</a><a data-goto="home" data-anchor="#how">How it works</a><a data-goto="home" data-anchor="#faq">FAQs</a><a href="/blog-why-ifv-business-plans-fail.html" style="color:var(--gold2)">Free Guide</a></div>
       <div class="fcol"><h4>Legal</h4><button onclick="showPage('terms')">Terms & Conditions</button><button onclick="showPage('privacy')">Privacy Policy</button></div>
-      <div class="fcol"><h4>Contact</h4><button onclick="showPage('contact')">Contact Us</button><a href="mailto:pilotforge@outlook.com">pilotforge@outlook.com</a></div>
+      <div class="fcol"><h4>Contact</h4><button onclick="showPage('contact')">Contact Us</button><a href="mailto:pilotforge@outlook.com">pilotforge@outlook.com</a><a href="tel:+447364123404">+44 7364123404</a></div>
     </div>
     <div class="fbot"><p>© 2025 PilotForge. Business plan review only. Not legal, immigration, or financial advice.</p><p>England & Wales</p></div>
   </div>
@@ -671,6 +676,89 @@ const CRITERIA=[
 ];
 const BLOCKS={A:'Innovation',B:'Viability',C:'Scalability',D:'Operations & Compliance'};
 let fd={},rdata=null;
+
+/* FORM DRAFT AUTOSAVE — prevents users losing answers if Stripe/card payment fails */
+const FORM_DRAFT_KEY = 'pf_fd';
+const FORM_CURRENT_STEP_KEY = 'pf_current_step';
+const FORM_FIELD_IDS = [
+  'f-name','f-email','f-biz','f-sector','f-stage',
+  'f-description','f-innovation','f-customers',
+  'f-competitors','f-revenue','f-market','f-uk',
+  'f-team','f-funding','f-traction','f-jobs'
+];
+
+function collectAllFormData(){
+  const draft = {};
+  FORM_FIELD_IDS.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)draft[id]=el.value.trim();
+  });
+  const opt=document.getElementById('optIn');
+  if(opt)draft.optIn=opt.checked;
+  return draft;
+}
+
+function saveDraft(){
+  const draft=collectAllFormData();
+  localStorage.setItem(FORM_DRAFT_KEY,JSON.stringify(draft));
+}
+
+function restoreDraft(){
+  const saved=localStorage.getItem(FORM_DRAFT_KEY);
+  if(!saved)return;
+  try{
+    const draft=JSON.parse(saved);
+    fd=draft;
+    FORM_FIELD_IDS.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el && draft[id])el.value=draft[id];
+    });
+    const opt=document.getElementById('optIn');
+    if(opt && draft.optIn===true)opt.checked=true;
+    showDraftNotice();
+  }catch(e){
+    console.warn('Could not restore saved draft:',e);
+  }
+}
+
+function setupAutoSave(){
+  FORM_FIELD_IDS.forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    ['input','change'].forEach(eventName=>{
+      el.addEventListener(eventName,()=>{
+        clearTimeout(window.pfDraftTimer);
+        window.pfDraftTimer=setTimeout(saveDraft,300);
+      });
+    });
+  });
+  const opt=document.getElementById('optIn');
+  if(opt)opt.addEventListener('change',saveDraft);
+}
+
+function showDraftNotice(){
+  const target=document.querySelector('.prog-hdr');
+  if(!target || document.getElementById('draftNotice'))return;
+  const notice=document.createElement('div');
+  notice.id='draftNotice';
+  notice.style.cssText=`background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;padding:12px 14px;border-radius:4px;font-size:13px;line-height:1.5;margin-bottom:14px;display:flex;justify-content:space-between;gap:12px;align-items:center;`;
+  notice.innerHTML=`<span>✓ Your previous details have been restored. You can continue from where you left.</span><button onclick="clearDraft()" style="background:none;border:none;color:#1e3a8a;text-decoration:underline;cursor:pointer;font:inherit;white-space:nowrap">Clear</button>`;
+  target.prepend(notice);
+}
+
+function clearDraft(){
+  localStorage.removeItem(FORM_DRAFT_KEY);
+  localStorage.removeItem(FORM_CURRENT_STEP_KEY);
+  fd={};
+  FORM_FIELD_IDS.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.value='';
+  });
+  const opt=document.getElementById('optIn');
+  if(opt)opt.checked=false;
+  const notice=document.getElementById('draftNotice');
+  if(notice)notice.remove();
+}
 
 function showPage(name,anchor){
   document.querySelectorAll('.page').forEach(p=>p.hidden=true);
@@ -732,28 +820,46 @@ function sendOptInEmail(data) {
 }
 
 window.addEventListener('DOMContentLoaded',()=>{
-  if(window.location.search.includes('paid=true')){const s=localStorage.getItem('pf_fd');if(s){fd=JSON.parse(s);runAnalysis();}}
+  restoreDraft();
+  setupAutoSave();
+
+  if(window.location.search.includes('paid=true')){
+    const s=localStorage.getItem(FORM_DRAFT_KEY);
+    if(s){
+      fd=JSON.parse(s);
+      runAnalysis();
+    }
+  }
+
+  if(window.location.search.includes('cancelled=true')){
+    showPage('form');
+    showDraftNotice();
+  }
+
   if(window.location.hash==='#admin')showPage('admin');
   if(window.location.hash==='#contact')showPage('contact');
-  const k=localStorage.getItem('pf_apikey');if(k)document.getElementById('apiKeyInput').value=k;
-  const s2=localStorage.getItem('pf_stripe');if(s2)document.getElementById('stripeInput').value=s2;
+
+  const k=localStorage.getItem('pf_apikey');
+  if(k && document.getElementById('apiKeyInput'))document.getElementById('apiKeyInput').value=k;
+
+  const s2=localStorage.getItem('pf_stripe');
+  if(s2 && document.getElementById('stripeInput'))document.getElementById('stripeInput').value=s2;
 });
 
 const SL=['Step 1 of 5 — About you','Step 2 of 5 — The idea','Step 3 of 5 — Market & competition','Step 4 of 5 — Team & financials','Step 5 of 5 — Review & pay'];
 const SF={0:['f-name','f-email','f-biz','f-sector','f-stage'],1:['f-description','f-innovation','f-customers'],2:['f-competitors','f-revenue','f-market','f-uk'],3:['f-team','f-funding','f-traction','f-jobs']};
 
 function updProg(s){document.getElementById('pf').style.width=((s+1)/5*100)+'%';document.getElementById('stepLabel').textContent=SL[s];for(let i=0;i<5;i++){const d=document.getElementById('d'+i);d.className='dot'+(i<s?' done':i===s?' active':'');}}
-function nextStep(f){if(!valStep(f))return;collectStep(f);document.getElementById('fs'+f).classList.remove('active');document.getElementById('fs'+(f+1)).classList.add('active');updProg(f+1);window.scrollTo({top:0,behavior:'smooth'});}
-function prevStep(f){document.getElementById('fs'+f).classList.remove('active');document.getElementById('fs'+(f-1)).classList.add('active');updProg(f-1);window.scrollTo({top:0,behavior:'smooth'});}
+function nextStep(f){if(!valStep(f))return;collectStep(f);saveDraft();localStorage.setItem(FORM_CURRENT_STEP_KEY,String(f+1));document.getElementById('fs'+f).classList.remove('active');document.getElementById('fs'+(f+1)).classList.add('active');updProg(f+1);window.scrollTo({top:0,behavior:'smooth'});}
+function prevStep(f){saveDraft();localStorage.setItem(FORM_CURRENT_STEP_KEY,String(f-1));document.getElementById('fs'+f).classList.remove('active');document.getElementById('fs'+(f-1)).classList.add('active');updProg(f-1);window.scrollTo({top:0,behavior:'smooth'});}
 function valStep(s){const r=SF[s];if(!r)return true;let ok=true;r.forEach(id=>{const el=document.getElementById(id);if(!el||!el.value.trim()){el.style.borderColor='#dc2626';ok=false;setTimeout(()=>el.style.borderColor='',2500);}});if(!ok)alert('Please fill in all required fields.');return ok;}
 function collectStep(s){const f=SF[s];if(!f)return;f.forEach(id=>{const el=document.getElementById(id);if(el)fd[id]=el.value.trim();});}
-function handlePay(){Object.keys(SF).forEach(s=>collectStep(parseInt(s)));fd.optIn=document.getElementById('optIn').checked;localStorage.setItem('pf_fd',JSON.stringify(fd));const str=localStorage.getItem('pf_stripe')||'https://buy.stripe.com/cNi9AT4p09lX9fx6Bl1ck00';window.location.href=str;}
+function handlePay(){Object.keys(SF).forEach(s=>collectStep(parseInt(s)));fd=collectAllFormData();localStorage.setItem(FORM_DRAFT_KEY,JSON.stringify(fd));localStorage.setItem(FORM_CURRENT_STEP_KEY,'4');const str=localStorage.getItem('pf_stripe')||'https://buy.stripe.com/cNi9AT4p09lX9fx6Bl1ck00';window.location.href=str;}
 
 async function runAnalysis(){
   showPage('processing');
   const ps=['ps0','ps1','ps2','ps3','ps4'];
   ps.forEach((id,i)=>setTimeout(()=>{document.querySelectorAll('.pstep').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(i>0)document.getElementById(ps[i-1]).classList.add('done');},i*12000));
-
 
   try{
     const res=await fetch('https://pilotforge-api.pilotforge.workers.dev/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-6',max_tokens:8000,system:getSP(),messages:[{role:'user',content:getSub()}]})});
@@ -762,12 +868,25 @@ async function runAnalysis(){
     const txt=data.content[0].text;
     const m=txt.match(/\{[\s\S]*\}/);if(!m)throw new Error('No JSON in response');
     rdata=JSON.parse(m[0]);
-    rdata.founderName=fd['f-name']||'Founder';rdata.bizName=fd['f-biz']||'Business';
-    rdata.sector=fd['f-sector']||'N/A';rdata.stage=fd['f-stage']||'N/A';
+    rdata.founderName=fd['f-name']||'Founder';
+    rdata.bizName=fd['f-biz']||'Business';
+    rdata.sector=fd['f-sector']||'N/A';
+    rdata.stage=fd['f-stage']||'N/A';
     rdata.reviewDate=new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'});
-    rdata.optIn=fd.optIn;rdata.email=fd['f-email'];
-    rdata.optIn=fd.optIn;rdata.email=fd["f-email"];const shouldEmail=fd.optIn===true;const emailTo=fd["f-email"];localStorage.removeItem("pf_fd");renderReport();showPage("report");if(shouldEmail){console.log("Firing opt-in email");sendOptInEmail(rdata);}
-  }catch(err){console.error(err);alert('Error generating report: '+err.message+'\n\nPlease contact pilotforge@outlook.com');showPage('home');}
+    rdata.optIn=fd.optIn;
+    rdata.email=fd['f-email'];
+
+    const shouldEmail=fd.optIn===true;
+    localStorage.removeItem(FORM_DRAFT_KEY);
+    localStorage.removeItem(FORM_CURRENT_STEP_KEY);
+    renderReport();
+    showPage('report');
+    if(shouldEmail){console.log('Firing opt-in email');sendOptInEmail(rdata);}
+  }catch(err){
+    console.error(err);
+    alert('Error generating report: '+err.message+'\n\nPlease contact pilotforge@outlook.com');
+    showPage('home');
+  }
 }
 
 function getSub(){return `BUSINESS PLAN SUBMISSION\nFounder: ${fd['f-name']} | Email: ${fd['f-email']}\nBusiness: ${fd['f-biz']} | Sector: ${fd['f-sector']} | Stage: ${fd['f-stage']}\nDESCRIPTION: ${fd['f-description']}\nINNOVATION: ${fd['f-innovation']}\nCUSTOMERS: ${fd['f-customers']}\nCOMPETITORS: ${fd['f-competitors']}\nREVENUE: ${fd['f-revenue']}\nMARKET: ${fd['f-market']}\nWHY UK: ${fd['f-uk']}\nTEAM: ${fd['f-team']}\nFUNDING: ${fd['f-funding']}\nTRACTION: ${fd['f-traction']}\nJOBS: ${fd['f-jobs']}`;}
